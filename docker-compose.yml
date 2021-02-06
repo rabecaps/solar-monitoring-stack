@@ -1,4 +1,4 @@
-version: "3.7"
+#version: "3.7"
 
 networks:
   sms-network:
@@ -14,7 +14,7 @@ services:
     networks:
       - sms-network
     volumes:
-      - ~/docker_sms_volumes/influxdbv2:/root/.influxdbv2
+      - ~/docker_volumes/influxdbv2:/root/.influxdbv2
 
   node-red:
     #image: nodered/node-red:latest
@@ -47,7 +47,7 @@ services:
     networks:
       - sms-network
     volumes:
-      - ~/docker_sms_volumes/grafana:/var/lib/grafana
+      - ~/docker_volumes/grafana:/var/lib/grafana
       - ./grafana:/etc/grafana/provisioning
     environment:
       - GF_DATABASE_TYPE=mysql
@@ -67,23 +67,10 @@ services:
     networks:
       - sms-network
     volumes:
-      - ~/docker_sms_volumes/mysql:/var/lib/mysql
+      - ~/docker_volumes/mysql:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=grafana
       - MYSQL_USER=grafana
       - MYSQL_PASSWORD=password
     restart: unless-stopped
-
-#  smtp:
-#    image: panubo/postfix:latest
-#    container_name: smtp
-#    hostname: smtp
-#    networks:
-#      - sms-network
-#    ports:
-#      - 587:587
-#    environment:
-#      - MAILNAME=localhost
-#      - SMTPD_USERS=no-reply:password
-#    restart: unless-stopped
